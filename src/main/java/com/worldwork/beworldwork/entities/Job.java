@@ -1,5 +1,4 @@
 package com.worldwork.beworldwork.entities;
-
 import jakarta.persistence.*;
 import lombok.*;
 
