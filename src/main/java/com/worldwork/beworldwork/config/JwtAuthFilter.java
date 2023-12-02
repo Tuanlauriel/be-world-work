@@ -32,7 +32,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         System.out.println(authHeader);
         if (!StringUtils.hasLength(authHeader) || !org.apache.commons.lang3.StringUtils.startsWith(authHeader, "Bearer ")) {
             filterChain.doFilter(request, response);
-            System.out.println(!StringUtils.hasLength(authHeader) + " " + !org.apache.commons.lang3.StringUtils.startsWith(authHeader, "Bearer "));
             return;
         }
 

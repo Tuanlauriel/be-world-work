@@ -27,13 +27,13 @@ public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
 
     @Override
-    public User createAccount(UserCreateRequest userRequest) {
+    public User createAccount(UserCreateRequest userRequest, Role role) {
         User user = User.builder()
                 .firstName(userRequest.getFirstName())
                 .lastName(userRequest.getLastName())
                 .email(userRequest.getEmail())
                 .password(passwordEncoder.encode(userRequest.getPassword()))
-                .role(Role.ADMIN)
+                .role(role)
                 .build();
         return userRepository.save(user);
     }
