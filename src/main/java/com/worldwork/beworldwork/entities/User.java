@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "jobs")
+@Table(name = "users")
 @Builder
 @Getter
 @Setter
@@ -23,13 +23,13 @@ public class User implements UserDetails {
     @Column(name = "user_id")
     private Integer user_id;
 
-    @Column(name="firstName")
+    @Column(name="firstName", nullable = false)
     private String firstName;
 
-    @Column(name="lastName")
+    @Column(name="lastName", nullable = false)
     private String lastName;
 
-    @Column(name="email")
+    @Column(name="email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false)
