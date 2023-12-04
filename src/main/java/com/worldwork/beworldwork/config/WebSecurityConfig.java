@@ -44,10 +44,12 @@ public class WebSecurityConfig {
         http.cors(Customizer.withDefaults());
         http.authorizeHttpRequests(request -> {
             request.requestMatchers("/test/api/v1/**").permitAll();
-            request.requestMatchers("/api/v1/auth/**").permitAll();
+            request.requestMatchers("/api/v1/auth/login").permitAll();
             request.requestMatchers(HttpMethod.POST, "/api/v1/users/create-user").permitAll();
             request.requestMatchers(HttpMethod.POST, "/api/v1/users/create-employers").permitAll();
             request.requestMatchers(HttpMethod.GET, "/api/v1/users").hasAnyAuthority(Role.ADMIN.name());
+            request.requestMatchers(HttpMethod.GET, "/api/v1/users/{email}").authenticated();
+            request.requestMatchers(HttpMethod.GET, "/api/v1/auth/{email}/role").authenticated();
         });
         http.sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authenticationProvider(authenticationProvider()).addFilterBefore(

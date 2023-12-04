@@ -31,6 +31,24 @@ public class UserController {
         return ResponseEntity.ok(userResponse);
     }
 
+    @GetMapping("/{email}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+        User user = authService.getUserByEmail(email).orElse(null);
+        if (user != null) {
+            UserDTO userDTO = UserDTO.builder()
+                    .id(user.getUser_id())
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .email(user.getEmail())
+                    .role(user.getRole())
+                    .address(user.getAddress())
+                    .phone(user.getPhone())
+                    .build();
+            return ResponseEntity.ok(userDTO);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("User not found."));
+    }
+
     @PostMapping("/create-user")
     public ResponseEntity<?> createUser(@RequestBody UserCreateRequest userRequest) {
         if (StringUtils.hasLength(userRequest.getEmail()) && userRequest.getPassword().length() >= 6) {

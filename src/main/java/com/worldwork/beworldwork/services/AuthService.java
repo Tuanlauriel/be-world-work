@@ -8,6 +8,7 @@ import com.worldwork.beworldwork.entities.Role;
 import com.worldwork.beworldwork.entities.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AuthService {
     User createAccount(UserCreateRequest userRequest, Role role);
@@ -19,4 +20,7 @@ public interface AuthService {
     JwtResponse refreshToken(RefreshTokenDTO refreshToken);
 
     List<User> getAllUsers();
+
+    Optional<User> getUserByEmail(String email);
+
 }
