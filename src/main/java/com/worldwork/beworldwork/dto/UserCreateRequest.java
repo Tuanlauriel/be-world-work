@@ -1,5 +1,6 @@
 package com.worldwork.beworldwork.dto;
 
+import com.worldwork.beworldwork.entities.Role;
 import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Data;
@@ -14,4 +15,6 @@ public class UserCreateRequest {
     private String email;
 
     private String password;
+
+    private Role role;
 }

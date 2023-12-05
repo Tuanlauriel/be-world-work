@@ -7,6 +7,7 @@ import com.worldwork.beworldwork.dto.MessageResponse;
 import com.worldwork.beworldwork.entities.Company;
 import com.worldwork.beworldwork.services.CompanyServices;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,10 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/test/api/v1/companies")
+@RequiredArgsConstructor
 public class CompanyController {
 
-    private CompanyServices companyServices;
-
-    @Autowired
-    public CompanyController (CompanyServices companyServices) {
-        this.companyServices = companyServices;
-    }
+    private final CompanyServices companyServices;
 
     @GetMapping
     public ResponseEntity<List<CompanyDTO>> getAllCompany() {
@@ -93,7 +90,7 @@ public class CompanyController {
 
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponse> updateCompany(@RequestBody CompanyDTO companyDTO, @PathVariable int id) {
-        if(companyServices.updateCompany(companyDTO, id)!=null) {
+        if(companyServices.updateCompany(companyDTO, id).isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("The company id - " + id + " has updated!!" ));
         }
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("Not found the company id - " + id + " to update"));

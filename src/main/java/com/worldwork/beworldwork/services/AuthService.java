@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AuthService {
-    User createAccount(UserCreateRequest userRequest, Role role);
+    User createAccount(UserCreateRequest userRequest);
 
     boolean existsEmail(String email);
 

@@ -55,7 +55,7 @@ public class UserController {
             if (authService.existsEmail(userRequest.getEmail())) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(new MessageResponse("Email already in use."));
             }
-            User user = authService.createAccount(userRequest, Role.USER);
+            User user = authService.createAccount(userRequest);
             UserDTO userDTO = UserDTO.builder()
                     .id(user.getUser_id())
                     .firstName(user.getFirstName())
@@ -70,24 +70,4 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Invalid email or password"));
     }
 
-    @PostMapping("/create-employers")
-    public ResponseEntity<?> createEmployers(@RequestBody UserCreateRequest userRequest) {
-        if (StringUtils.hasLength(userRequest.getEmail()) && userRequest.getPassword().length() >= 6) {
-            if (authService.existsEmail(userRequest.getEmail())) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(new MessageResponse("Email already in use."));
-            }
-            User user = authService.createAccount(userRequest, Role.EMPLOYERS);
-            UserDTO userDTO = UserDTO.builder()
-                    .id(user.getUser_id())
-                    .firstName(user.getFirstName())
-                    .lastName(user.getLastName())
-                    .email(user.getEmail())
-                    .role(user.getRole())
-                    .address(user.getAddress())
-                    .phone(user.getPhone())
-                    .build();
-            return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Invalid email or password"));
-    }
 }
